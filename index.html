@@ -66,11 +66,22 @@
         // run the webcam image through the image model
         async function predict() {
             // predict can take in an image, video or canvas html element
-            var image = document.getelementById("my-image")
-            const prediction = await model.predict(webcam.canvas);
-            if (prediction[0].probablity > 0.7){
+            var image = document.getElementById("my-image")
+            const prediction = await model.predict(image, false);
+            if(prediction[0].probability > 0.7){
                 labelContainer.childNodes[0].innerHTML = "위 포켓몬은 피카츄입니다."
-                labelContainer.childNodes[0].innerHTML = "피카츄(Pikachu)는 포켓몬스터 미디어 프랜차이즈에 등장하는 가공의 종이다. 니시다 아쓰코와 스기모리 켄이 디자인한 피카츄는 게임 프리크와 닌텐도가 제작한 1996년 비디오 게임 《포켓몬스터 적·녹》에 처음 등장했으며, 1998년 포켓몬스터 적·청으로 출시되었다."
+                labelContainer.childNodes[1].innerHTML = "피카츄는 포켓몬스터에 등장하는 가상의 생명체이다. 애니메이션과 비디오게임에서는 오오타니 이쿠에가 그 목소리를 맡고 있다. 귀여운 전기 포켓몬을 그려달라는 스기모리 켄의 주문을 받아 니시다 아쓰코가 디자인하였다. 포켓몬 애니메이션에서 주인공 지우의 첫 포켓몬이자 파트너이다."
+            }
+            else if(prediction[1].probability > 0.7){
+                labelContainer.childNodes[0].innerHTML = "위 포켓몬은 파이리입니다."
+                labelContainer.childNodes[1].innerHTML = "《파이리》는 포켓몬스터 시리즈에 등장하는 가공의 캐릭터이다. 한국명인 '파이리'는 영어로 불을 뜻하는 'Fire'와 꼬리의 합성어이다."
+            }
+            else if(prediction[2].probability > 0.7){
+                labelContainer.childNodes[0].innerHTML = "위 포켓몬은 꼬부기입니다."
+                labelContainer.childNodes[1].innerHTML = "《꼬부기》는 포켓몬스터 시리즈에 등장하는 가공의 캐릭터이다. 분류는 꼬마거북 포켓몬이다."
+            }
+            else{
+                labelContainer.childNodes[0].innerHTML = "모르겠습니다."
             }
             // for (let i = 0; i < maxPredictions; i++) {
             //     const classPrediction =
