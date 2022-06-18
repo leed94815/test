@@ -12,7 +12,8 @@
 <body>
     <h1>포켓몬 도감 만들기</h1>
     <p>피카츄, 꼬북이, 파이리를 구별하서 이에 대한 설명을 보여주는 왭 앱</p>
-    <!-- <button type="button" onclick="init()">Start</button> -->
+    <button type="button" onclick="init()">Start</button>
+    <button type="button" onclick="predict()">predict</button>
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <div class="file-upload">
         <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add
@@ -25,7 +26,7 @@
             </div>
         </div>
         <div class="file-upload-content">
-            <img class="file-upload-image" src="#" alt="your image" />
+            <img class="file-upload-image" Id="my-image" src="#" alt="your image" />
             <div class="image-title-wrap">
                 <button type="button" onclick="removeUpload()" class="remove-image">Remove <span
                         class="image-title">Uploaded Image</span></button>
@@ -65,12 +66,17 @@
         // run the webcam image through the image model
         async function predict() {
             // predict can take in an image, video or canvas html element
+            var image = document.getelementById("my-image")
             const prediction = await model.predict(webcam.canvas);
-            for (let i = 0; i < maxPredictions; i++) {
-                const classPrediction =
-                    prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-                labelContainer.childNodes[i].innerHTML = classPrediction;
+            if (prediction[0].probablity > 0.7){
+                labelContainer.childNodes[0].innerHTML = "위 포켓몬은 피카츄입니다."
+                labelContainer.childNodes[0].innerHTML = "피카츄(Pikachu)는 포켓몬스터 미디어 프랜차이즈에 등장하는 가공의 종이다. 니시다 아쓰코와 스기모리 켄이 디자인한 피카츄는 게임 프리크와 닌텐도가 제작한 1996년 비디오 게임 《포켓몬스터 적·녹》에 처음 등장했으며, 1998년 포켓몬스터 적·청으로 출시되었다."
             }
+            // for (let i = 0; i < maxPredictions; i++) {
+            //     const classPrediction =
+            //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+            //     labelContainer.childNodes[i].innerHTML = classPrediction;
+            // }
         }
     </script>
     <script>
